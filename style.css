@@ -96,15 +96,8 @@ body {
 }
 .tarjeta.arrastrando .asa { cursor: grabbing; }
 
-/* Estado congelado: no se puede mover nada */
-.tarjetas.congelada .tarjeta { background: #fbf8f1; border-color: #d8cfb8; }
-.tarjetas.congelada .controles { display: none; }
-.tarjetas.congelada .tarjeta::after { content: '🔒'; opacity: .5; font-size: .9rem; }
-.tarjetas.congelada .tarjeta { grid-template-columns: 32px 44px 1fr auto; }
 
 /* ---------- Botones ---------- */
-.acciones { margin-top: 20px; display: flex; justify-content: center; gap: 8px; }
-.acciones-inline { justify-content: flex-start; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .btn {
   font: inherit; font-weight: 600; padding: 10px 16px; border-radius: 10px;
   border: 1px solid var(--line); background: var(--card); color: var(--ink);
@@ -112,16 +105,8 @@ body {
 }
 .btn-primary { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
 .btn-ghost { background: transparent; }
-.btn-peligro { color: var(--danger); border-color: var(--danger); background: transparent; }
-.btn-grande { font-size: 1.1rem; padding: 14px 28px; }
 .btn:hover { filter: brightness(.96); }
 
-/* ---------- Toast ---------- */
-.toast {
-  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
-  background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 999px; font-size: .9rem; z-index: 30;
-}
-.toast[hidden] { display: none; }
 
 @media (max-width: 420px) {
   .tarjeta { grid-template-columns: 28px 36px 1fr auto; padding: 8px 10px; gap: 8px; }

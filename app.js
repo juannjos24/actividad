@@ -1,7 +1,6 @@
 /* ===========================================================
-   ¿Qué pesa más?  —  ordenar tarjetas y congelar el orden.
-   El orden congelado se guarda en localStorage para que
-   sobreviva a recargar la página.
+   ¿Qué pesa más?  —  ordenar tarjetas de mayor a menor peso.
+   Las tarjetas se cargan siempre mezcladas.
    =========================================================== */
 
 const VALORES = [
@@ -22,25 +21,8 @@ const VALORES = [
 ];
 
 const POR_ID = Object.fromEntries(VALORES.map(v => [v.id, v]));
-const STORAGE_KEY = 'que-pesa-mas:orden';
-const N = VALORES.length;
-
 const $ = sel => document.querySelector(sel);
 const lista = $('#lista-tarjetas');
-let congelado = false;
-
-/* ---------------- Almacenamiento ---------------- */
-function cargarOrdenGuardado() {
-  try {
-    const orden = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-    const valido = Array.isArray(orden) && orden.length === N
-      && orden.every(id => POR_ID[id]) && new Set(orden).size === N;
-    return valido ? orden : null;
-  } catch { return null; }
-}
-
-function guardarOrden(orden) { localStorage.setItem(STORAGE_KEY, JSON.stringify(orden)); }
-function borrarOrden() { localStorage.removeItem(STORAGE_KEY); }
 
 /* ---------------- Tarjetas ---------------- */
 function barajar(arr) {
@@ -76,47 +58,17 @@ function renderTarjetas(orden) {
 function actualizarPosiciones() {
   [...lista.children].forEach((li, i) => {
     li.querySelector('.posicion').textContent = i + 1;
-    li.querySelector('[data-mover="-1"]').disabled = congelado || i === 0;
-    li.querySelector('[data-mover="1"]').disabled = congelado || i === lista.children.length - 1;
+    li.querySelector('[data-mover="-1"]').disabled = i === 0;
+    li.querySelector('[data-mover="1"]').disabled = i === lista.children.length - 1;
   });
 }
 
-function ordenActual() {
-  return [...lista.children].map(li => li.dataset.id);
-}
-
-/* ---------------- Congelar / descongelar ---------------- */
-function aplicarEstado() {
-  lista.classList.toggle('congelada', congelado);
-  $('#btn-enviar').hidden = congelado;
-  $('#btn-editar').hidden = !congelado;
-  $('#btn-mezclar').hidden = congelado;
-  actualizarPosiciones();
-}
-
-$('#btn-enviar').addEventListener('click', () => {
-  congelado = true;
-  guardarOrden(ordenActual());
-  aplicarEstado();
-  toast('Orden guardado 🔒');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-$('#btn-editar').addEventListener('click', () => {
-  if (!confirm('¿Quieres volver a ordenar las tarjetas?')) return;
-  congelado = false;
-  borrarOrden();
-  aplicarEstado();
-});
-
 $('#btn-mezclar').addEventListener('click', () => {
-  if (congelado) return;
   renderTarjetas(barajar(VALORES.map(v => v.id)));
 });
 
 /* ---------------- Botones ▲ ▼ ---------------- */
 lista.addEventListener('click', e => {
-  if (congelado) return;
   const btn = e.target.closest('[data-mover]');
   if (!btn) return;
   const li = btn.closest('.tarjeta');
@@ -131,7 +83,6 @@ lista.addEventListener('click', e => {
 let arrastre = null;
 
 lista.addEventListener('pointerdown', e => {
-  if (congelado) return;
   const asa = e.target.closest('.asa');
   if (!asa) return;
   const li = asa.closest('.tarjeta');
@@ -171,18 +122,5 @@ function terminarArrastre(e) {
 lista.addEventListener('pointerup', terminarArrastre);
 lista.addEventListener('pointercancel', terminarArrastre);
 
-/* ---------------- Toast ---------------- */
-let toastTimer;
-function toast(msg) {
-  const t = $('#toast');
-  t.textContent = msg;
-  t.hidden = false;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.hidden = true; }, 2200);
-}
-
-/* ---------------- Inicio ---------------- */
-const guardado = cargarOrdenGuardado();
-congelado = !!guardado;
-renderTarjetas(guardado || barajar(VALORES.map(v => v.id)));
-aplicarEstado();
+/* ---------------- Inicio: siempre mezcladas ---------------- */
+renderTarjetas(barajar(VALORES.map(v => v.id)));
