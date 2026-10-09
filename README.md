@@ -7,7 +7,10 @@ Juego de tarjetas para ordenar valores de **mayor** a **menor peso** en la vida.
 
 - Al abrir la página aparecen las 14 tarjetas **mezcladas al azar**.
 - Se ordenan arrastrando el asa `⋮⋮` (ratón o táctil) o con las flechas ▲ ▼.
-- El botón **Mezclar** las vuelve a barajar. No se guarda nada: al recargar se mezclan de nuevo.
+- El botón **Mezclar** las vuelve a barajar.
+- **Guardar** conserva el orden en `localStorage` del navegador. Al volver a abrir la página se
+  restaura ese orden; debajo del botón se indica si está guardado o hay cambios sin guardar.
+  Si no hay nada guardado, las tarjetas aparecen mezcladas.
 
 ## Publicar en GitHub Pages
 

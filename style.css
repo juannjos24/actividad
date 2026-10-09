@@ -98,6 +98,10 @@ body {
 
 
 /* ---------- Botones ---------- */
+.acciones { margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.estado { font-size: .85rem; color: var(--muted); }
+.estado.ok { color: #2f855a; }
+.estado.pendiente { color: var(--primary); font-weight: 600; }
 .btn {
   font: inherit; font-weight: 600; padding: 10px 16px; border-radius: 10px;
   border: 1px solid var(--line); background: var(--card); color: var(--ink);
@@ -105,8 +109,15 @@ body {
 }
 .btn-primary { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
 .btn-ghost { background: transparent; }
+.btn-grande { font-size: 1.1rem; padding: 14px 28px; }
 .btn:hover { filter: brightness(.96); }
 
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+  background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 999px; font-size: .9rem; z-index: 30;
+}
 
 @media (max-width: 420px) {
   .tarjeta { grid-template-columns: 28px 36px 1fr auto; padding: 8px 10px; gap: 8px; }

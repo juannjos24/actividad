@@ -1,6 +1,8 @@
 /* ===========================================================
    ¿Qué pesa más?  —  ordenar tarjetas de mayor a menor peso.
-   Las tarjetas se cargan siempre mezcladas.
+   Con "Guardar" el orden se conserva en localStorage y se
+   restaura al volver a abrir la página. Si no hay nada
+   guardado, las tarjetas se cargan mezcladas.
    =========================================================== */
 
 const VALORES = [
@@ -21,8 +23,43 @@ const VALORES = [
 ];
 
 const POR_ID = Object.fromEntries(VALORES.map(v => [v.id, v]));
+const STORAGE_KEY = 'que-pesa-mas:orden';
+const N = VALORES.length;
+
 const $ = sel => document.querySelector(sel);
 const lista = $('#lista-tarjetas');
+let ordenGuardado = null;
+
+/* ---------------- Almacenamiento ---------------- */
+function cargarOrdenGuardado() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+    const orden = data && data.orden;
+    const valido = Array.isArray(orden) && orden.length === N
+      && orden.every(id => POR_ID[id]) && new Set(orden).size === N;
+    return valido ? data : null;
+  } catch { return null; }
+}
+
+function guardarOrden(orden) {
+  const data = { orden, fecha: new Date().toISOString() };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  return data;
+}
+
+function ordenActual() {
+  return [...lista.children].map(li => li.dataset.id);
+}
+
+function actualizarEstado() {
+  const el = $('#estado-guardado');
+  if (!ordenGuardado) { el.textContent = 'Sin guardar'; el.className = 'estado'; return; }
+  const igual = JSON.stringify(ordenActual()) === JSON.stringify(ordenGuardado.orden);
+  const fecha = new Date(ordenGuardado.fecha);
+  const cuando = isNaN(fecha) ? '' : ' · ' + fecha.toLocaleString('es', { dateStyle: 'short', timeStyle: 'short' });
+  el.textContent = igual ? '✅ Guardado' + cuando : '✏️ Cambios sin guardar';
+  el.className = 'estado ' + (igual ? 'ok' : 'pendiente');
+}
 
 /* ---------------- Tarjetas ---------------- */
 function barajar(arr) {
@@ -56,12 +93,19 @@ function renderTarjetas(orden) {
 }
 
 function actualizarPosiciones() {
+  actualizarEstado();
   [...lista.children].forEach((li, i) => {
     li.querySelector('.posicion').textContent = i + 1;
     li.querySelector('[data-mover="-1"]').disabled = i === 0;
     li.querySelector('[data-mover="1"]').disabled = i === lista.children.length - 1;
   });
 }
+
+$('#btn-guardar').addEventListener('click', () => {
+  ordenGuardado = guardarOrden(ordenActual());
+  actualizarEstado();
+  toast('Orden guardado 💾');
+});
 
 $('#btn-mezclar').addEventListener('click', () => {
   renderTarjetas(barajar(VALORES.map(v => v.id)));
@@ -122,5 +166,16 @@ function terminarArrastre(e) {
 lista.addEventListener('pointerup', terminarArrastre);
 lista.addEventListener('pointercancel', terminarArrastre);
 
-/* ---------------- Inicio: siempre mezcladas ---------------- */
-renderTarjetas(barajar(VALORES.map(v => v.id)));
+/* ---------------- Toast ---------------- */
+let toastTimer;
+function toast(msg) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.hidden = true; }, 2200);
+}
+
+/* ---------------- Inicio ---------------- */
+ordenGuardado = cargarOrdenGuardado();
+renderTarjetas(ordenGuardado ? ordenGuardado.orden : barajar(VALORES.map(v => v.id)));
