@@ -5,26 +5,11 @@ Juego de tarjetas para ordenar valores de **mayor** a **menor peso** en la vida.
 
 ## Cómo funciona
 
-- **Ordenar** (vista principal, se abre directamente): aparecen 14 tarjetas mezcladas. Se ordenan arrastrando el asa `⋮⋮`
-  (ratón o táctil) o con las flechas ▲ ▼. Al pulsar **Enviar mi orden** la respuesta se guarda.
-- **Resultados** (`#resultados`, vista oculta, sin enlace en la interfaz; se abre escribiendo
-  `.../index.html#resultados`): ranking global con puntuación tipo Borda
-  (14 puntos al 1º lugar, 1 al último), posición media, veces en 1º lugar y el listado de
-  respuestas individuales.
-
-## Dónde se guardan los datos
-
-En `localStorage` del navegador. Eso significa que **cada dispositivo ve solo sus propias
-respuestas**. Para juntar respuestas de varias personas sin backend hay dos caminos:
-
-1. **Enlace compartido**: al enviar, el juego genera un enlace con la respuesta codificada
-   (`#r=...`). Quien recoge resultados abre ese enlace en su dispositivo y la respuesta se añade
-   automáticamente (sin duplicados).
-2. **Exportar / Importar JSON**: desde Resultados se descargan todas las respuestas y se pueden
-   importar en otro navegador.
-
-También funciona perfecto si todos juegan en el **mismo dispositivo** (por ejemplo una tablet
-que se va pasando): ahí sí se acumulan directamente.
+- Aparecen 14 tarjetas mezcladas. Se ordenan arrastrando el asa `⋮⋮` (ratón o táctil)
+  o con las flechas ▲ ▼. El botón **Mezclar** las baraja de nuevo.
+- Al pulsar **Enviar mi orden** las tarjetas quedan **congeladas** (no se pueden mover)
+  y el orden se guarda en `localStorage`, así que sobrevive a recargar la página.
+- **Volver a ordenar** (pide confirmación) desbloquea las tarjetas.
 
 ## Publicar en GitHub Pages
 
@@ -43,4 +28,4 @@ La página quedará en `https://TU_USUARIO.github.io/TU_REPO/`.
 ## Personalizar
 
 Las tarjetas están en el array `VALORES` al inicio de `app.js`. Se pueden añadir, quitar o
-cambiar emojis y nombres; la puntuación se ajusta sola al número de tarjetas.
+cambiar emojis y nombres.

@@ -11,8 +11,7 @@
     <span class="brand">⚖️ ¿Qué pesa más?</span>
   </header>
 
-  <!-- ================= VISTA: JUGAR ================= -->
-  <main id="vista-jugar" class="vista" hidden>
+  <main class="vista">
     <section class="intro">
       <h1>Ordena las tarjetas</h1>
       <p>
@@ -20,10 +19,6 @@
         <strong>mayor peso</strong> arriba a <strong>menor peso</strong> abajo.
         ¿Qué cosas ocupan más lugar en tu vida hoy?
       </p>
-      <label class="campo">
-        <span>Tu nombre (opcional)</span>
-        <input type="text" id="nombre" maxlength="40" placeholder="Anónimo" autocomplete="off">
-      </label>
     </section>
 
     <div class="escala">
@@ -37,44 +32,9 @@
 
     <div class="acciones">
       <button type="button" id="btn-enviar" class="btn btn-primary btn-grande">Enviar mi orden</button>
+      <button type="button" id="btn-editar" class="btn btn-ghost" hidden>✏️ Volver a ordenar</button>
     </div>
   </main>
-
-  <!-- ================= VISTA: RESULTADOS ================= -->
-  <main id="vista-resultados" class="vista" hidden>
-    <section class="intro">
-      <h1>Resultados</h1>
-      <p id="resumen-resultados">Todavía no hay respuestas. ¡Sé el primero en jugar!</p>
-      <div class="acciones acciones-inline">
-        <button type="button" id="btn-exportar" class="btn btn-ghost">⬇️ Exportar JSON</button>
-        <label class="btn btn-ghost" for="input-importar">⬆️ Importar JSON</label>
-        <input type="file" id="input-importar" accept="application/json" hidden>
-        <button type="button" id="btn-borrar-todo" class="btn btn-peligro">🗑️ Borrar todo</button>
-      </div>
-    </section>
-
-    <section id="ranking-global" class="ranking"></section>
-
-    <section class="respuestas">
-      <h2>Respuestas individuales</h2>
-      <div id="lista-respuestas" class="lista-respuestas"></div>
-    </section>
-  </main>
-
-  <!-- ================= MODAL: COMPARTIR ================= -->
-  <div id="modal-compartir" class="modal" hidden>
-    <div class="modal-caja">
-      <h2>✅ ¡Guardado!</h2>
-      <p>
-        Tu orden quedó guardado. Copia este enlace y envíaselo a quien recoge los resultados:
-      </p>
-      <textarea id="enlace-compartir" readonly rows="3"></textarea>
-      <div class="acciones acciones-inline">
-        <button type="button" id="btn-copiar" class="btn btn-primary">📋 Copiar enlace</button>
-        <button type="button" id="btn-otra" class="btn btn-ghost">Cerrar</button>
-      </div>
-    </div>
-  </div>
 
   <div id="toast" class="toast" hidden></div>
 
