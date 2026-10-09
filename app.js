@@ -197,10 +197,11 @@ $('#btn-copiar').addEventListener('click', async () => {
   }
 });
 
-$('#btn-ver-resultados').addEventListener('click', () => {
+$('#btn-otra').addEventListener('click', () => {
   $('#modal-compartir').hidden = true;
   $('#nombre').value = '';
   renderTarjetas(barajar(VALORES.map(v => v.id)));
+  window.scrollTo(0, 0);
 });
 
 /* ---------------- Vista: Resultados ---------------- */
@@ -326,7 +327,6 @@ function toast(msg) {
 function mostrarVista(nombre) {
   $('#vista-jugar').hidden = nombre !== 'jugar';
   $('#vista-resultados').hidden = nombre !== 'resultados';
-  document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('activo', a.dataset.nav === nombre));
   if (nombre === 'resultados') renderResultados();
   window.scrollTo(0, 0);
 }
@@ -348,7 +348,8 @@ function enrutar() {
     return;
   }
 
-  mostrarVista(hash === 'jugar' ? 'jugar' : 'resultados');
+  // Por defecto se entra directo a ordenar. #resultados es una vista "oculta" para quien recoge respuestas.
+  mostrarVista(hash === 'resultados' ? 'resultados' : 'jugar');
 }
 
 window.addEventListener('hashchange', enrutar);

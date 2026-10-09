@@ -8,11 +8,7 @@
 </head>
 <body>
   <header class="topbar">
-    <a href="#resultados" class="brand">⚖️ ¿Qué pesa más?</a>
-    <nav>
-      <a href="#resultados" data-nav="resultados">Resultados</a>
-      <a href="#jugar" data-nav="jugar" class="btn btn-primary">Jugar</a>
-    </nav>
+    <span class="brand">⚖️ ¿Qué pesa más?</span>
   </header>
 
   <!-- ================= VISTA: JUGAR ================= -->
@@ -50,7 +46,6 @@
       <h1>Resultados</h1>
       <p id="resumen-resultados">Todavía no hay respuestas. ¡Sé el primero en jugar!</p>
       <div class="acciones acciones-inline">
-        <a href="#jugar" class="btn btn-primary">➕ Jugar</a>
         <button type="button" id="btn-exportar" class="btn btn-ghost">⬇️ Exportar JSON</button>
         <label class="btn btn-ghost" for="input-importar">⬆️ Importar JSON</label>
         <input type="file" id="input-importar" accept="application/json" hidden>
@@ -71,13 +66,12 @@
     <div class="modal-caja">
       <h2>✅ ¡Guardado!</h2>
       <p>
-        Tu orden quedó guardado en este navegador. Si quieres que aparezca también
-        en el dispositivo de quien recoge los resultados, cópiale este enlace:
+        Tu orden quedó guardado. Copia este enlace y envíaselo a quien recoge los resultados:
       </p>
       <textarea id="enlace-compartir" readonly rows="3"></textarea>
       <div class="acciones acciones-inline">
         <button type="button" id="btn-copiar" class="btn btn-primary">📋 Copiar enlace</button>
-        <a href="#resultados" id="btn-ver-resultados" class="btn btn-ghost">Ver resultados</a>
+        <button type="button" id="btn-otra" class="btn btn-ghost">Cerrar</button>
       </div>
     </div>
   </div>

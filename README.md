@@ -5,9 +5,10 @@ Juego de tarjetas para ordenar valores de **mayor** a **menor peso** en la vida.
 
 ## Cómo funciona
 
-- **Jugar** (`#jugar`): aparecen 14 tarjetas mezcladas. Se ordenan arrastrando el asa `⋮⋮`
+- **Ordenar** (vista principal, se abre directamente): aparecen 14 tarjetas mezcladas. Se ordenan arrastrando el asa `⋮⋮`
   (ratón o táctil) o con las flechas ▲ ▼. Al pulsar **Enviar mi orden** la respuesta se guarda.
-- **Resultados** (`#resultados`, vista principal): ranking global con puntuación tipo Borda
+- **Resultados** (`#resultados`, vista oculta, sin enlace en la interfaz; se abre escribiendo
+  `.../index.html#resultados`): ranking global con puntuación tipo Borda
   (14 puntos al 1º lugar, 1 al último), posición media, veces en 1º lugar y el listado de
   respuestas individuales.
 
